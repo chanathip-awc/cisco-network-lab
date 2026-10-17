@@ -1,0 +1,124 @@
+ROUTER-01#show run
+Building configuration...
+
+Current configuration : 2388 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname ROUTER-01
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+ip cef
+!
+!
+no ip dhcp use vrf connected
+ip dhcp excluded-address 192.168.10.1 192.168.10.100
+ip dhcp excluded-address 192.168.20.1 192.168.20.100
+ip dhcp excluded-address 192.168.30.1 192.168.30.100
+!
+ip dhcp pool VLAN10
+   network 192.168.10.0 255.255.255.0
+   default-router 192.168.10.1
+   dns-server 8.8.8.8
+!
+ip dhcp pool VLAN20
+   network 192.168.20.0 255.255.255.0
+   default-router 192.168.20.1
+   dns-server 8.8.8.8
+!
+ip dhcp pool VLAN30
+   network 192.168.30.0 255.255.255.0
+   default-router 192.168.30.1
+   dns-server 8.8.8.8
+!
+!
+multilink bundle-name authenticated
+!
+!
+username admin privilege 15 secret 5 $1$FHOM$wxNXGNBvy7m1b2cfK6iwB1
+archive
+ log config
+  hidekeys
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ description UPLINK_TO_INTERNET
+ ip address 203.0.113.2 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1.10
+ description VLAN10-IT
+ encapsulation dot1Q 10
+ ip address 192.168.10.1 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly
+!
+interface FastEthernet0/1.20
+ description VLAN20-HR
+ encapsulation dot1Q 20
+ ip address 192.168.20.1 255.255.255.0
+ ip access-group VLAN20 in
+ ip nat inside
+ ip virtual-reassembly
+!
+interface FastEthernet0/1.30
+ description VLAN30-BD
+ encapsulation dot1Q 30
+ ip address 192.168.30.1 255.255.255.0
+ ip access-group VLAN30 in
+ ip nat inside
+ ip virtual-reassembly
+!
+ip route 0.0.0.0 0.0.0.0 203.0.113.1
+!
+!
+ip http server
+ip nat inside source list NAT_TO_INTERNET interface FastEthernet0/0 overload
+!
+ip access-list standard NAT_TO_INTERNET
+ permit 192.168.10.0 0.0.0.255
+ permit 192.168.20.0 0.0.0.255
+ permit 192.168.30.0 0.0.0.255
+!
+ip access-list extended VLAN20
+ permit icmp 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255 echo-reply
+ deny   ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+ permit ip any any
+ip access-list extended VLAN30
+ permit icmp 192.168.30.0 0.0.0.255 192.168.10.0 0.0.0.255 echo-reply
+ deny   ip 192.168.30.0 0.0.0.255 192.168.10.0 0.0.0.255
+ permit ip any any
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ login local
+line aux 0
+line vty 0 4
+ login
+!
+scheduler allocate 20000 1000
+end
+
+ROUTER-01#

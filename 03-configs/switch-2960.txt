@@ -1,0 +1,133 @@
+SWITCH-01#show run
+Building configuration...
+
+Current configuration : 1807 bytes
+!
+! Last configuration change at 07:28:46 UTC Sat Feb 16 2002
+! NVRAM config last updated at 08:07:41 UTC Sat Feb 16 2002 by admin
+!
+version 15.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname SWITCH-01
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+username admin privilege 15 secret 5 $1$6Qm4$mvsMjB3oNL4kBiVrDjTeH.
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0
+!
+interface GigabitEthernet0/1
+ switchport access vlan 10
+ switchport mode access
+!
+interface GigabitEthernet0/2
+ switchport access vlan 20
+ switchport mode access
+!
+interface GigabitEthernet0/3
+ switchport access vlan 30
+ switchport mode access
+!
+interface GigabitEthernet0/4
+!
+interface GigabitEthernet0/5
+!
+interface GigabitEthernet0/6
+!
+interface GigabitEthernet0/7
+!
+interface GigabitEthernet0/8
+!
+interface GigabitEthernet0/9
+!
+interface GigabitEthernet0/10
+!
+interface GigabitEthernet0/11
+!
+interface GigabitEthernet0/12
+!
+interface GigabitEthernet0/13
+!
+interface GigabitEthernet0/14
+!
+interface GigabitEthernet0/15
+!
+interface GigabitEthernet0/16
+!
+interface GigabitEthernet0/17
+!
+interface GigabitEthernet0/18
+!
+interface GigabitEthernet0/19
+!
+interface GigabitEthernet0/20
+!
+interface GigabitEthernet0/21
+!
+interface GigabitEthernet0/22
+!
+interface GigabitEthernet0/23
+!
+interface GigabitEthernet0/24
+ description UPLINK_TO_ROUTER-01
+ switchport trunk allowed vlan 10,20,30
+ switchport mode trunk
+!
+interface GigabitEthernet0/25
+!
+interface GigabitEthernet0/26
+!
+interface Vlan1
+!
+ip http server
+ip http secure-server
+!
+!
+no vstack
+!
+line con 0
+ login local
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+end
+
+SWITCH-01#
