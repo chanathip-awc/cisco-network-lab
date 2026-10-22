@@ -38,29 +38,6 @@ A hands-on lab built on real hardware that covers inter-VLAN routing (Router-on-
 | Switch (Layer 2) | Cisco Catalyst 2960 | Gi0/24 = trunk, Gi0/1-3 = access ports |
 | Clients | Lenovo ThinkCentre x 3 | One per VLAN |
 
-## Topology
-
-```
- [TP-Link Archer MR200]  WAN1: 203.0.113.1/30
-           |
-           |  WAN 203.0.113.0/30
-           |
- [Cisco 1841 Router]  Fa0/0: 203.0.113.2/30
-           |           Fa0/1: sub-interfaces (802.1Q, VLAN 10/20/30)
-           |
-           |  Trunk (VLAN 10, 20, 30)
-           |
- [Cisco Catalyst 2960]  Gi0/24: Trunk
-     |         |         |
-   Gi0/1     Gi0/2     Gi0/3
-  (VLAN10)  (VLAN20)  (VLAN30)
-     |         |         |
- ThinkCentre1  ThinkCentre2  ThinkCentre3
-   (IT)          (HR)          (BD)
-```
-
-> The `203.0.113.0/24` range is reserved for documentation (TEST-NET-3, RFC 5737) and is used here as a placeholder WAN subnet.
-
 ## Addressing Plan
 
 ### WAN
