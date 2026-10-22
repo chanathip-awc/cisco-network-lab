@@ -163,12 +163,6 @@ cisco-network-lab/
 └── 03-configs/         # Device configurations (sensitive data redacted)
 ```
 
-## Key Takeaways
-
-- Designed a multi-VLAN network with a clean IP addressing plan
-- Configured 802.1Q trunking and Router-on-a-Stick on real Cisco hardware
-- Implemented DHCP, NAT overload, and ACL-based segmentation
-- Verified the design with systematic connectivity and policy tests
 
 ## Author
 
